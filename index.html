@@ -28,6 +28,7 @@
 	<meta name="msapplication-config" content="favicons/browserconfig.xml">
 	<meta name="theme-color" content="#ffffff">
 	<link rel="stylesheet" href="css/bootstrap.css">
+	<link rel="stylesheet" href="css/prism.css">
 	<link rel="stylesheet" href="fonts/font-awesome-4.3.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="css/all.css">
 	<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700|Source+Sans+Pro:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
@@ -74,7 +75,45 @@
 					<h1>Heridux</h1>
 				</div>
 				<p class="tagline">The easiest way to use and reuse redux stores or react internal states</p>
-				<span class="info">Version 2.8 for Mac and Windows</span>
+				<!-- <span class="info">Few lines of code to make </span> -->
+			</div>
+			<div class="flex-code">
+        <div>
+          <h4>Create your store</h4>
+			<pre><code class="language-javascript">import Heridux from "@heridux/core"
+
+const store = new Heridux("counterStore")
+
+store.setInitialState({ counter : 0 })
+
+store.createAction("increment", state => (
+  state.set("counter", state.get("counter") + 1)
+))
+
+store.createAction("decrement", state => (
+  state.set("counter", state.get("counter") - 1)
+))
+
+store.register()</code></pre>
+        </div>
+        <div>
+          <h4>Use it with React</h4>
+				  <pre><code class="language-jsx">import { useStore, useSelector } from "@heridux/react"
+
+const MyComponent = () => {
+  const store = useStore()
+  const counter = useSelector(state => state.get("counter"))
+
+  return (
+    &lt;div&gt;
+      &lt;p&gt;Clicked: &lt;span&gt;{ counter }&lt;/span&gt; times&lt;/p&gt;
+      &lt;button onClick={ () => store.execAction("increment") }&gt;+&lt;/button&gt;
+      &lt;button onClick={ () => store.execAction("decrement") }&gt;-&lt;/button&gt;
+    &lt;/div&gt;
+  )
+
+}</code></pre>
+        </div>
 			</div>
 		</div>
 		<!-- <img src="images/img-decor-01.jpg" alt="" class="bg-stretch"> -->
@@ -82,8 +121,8 @@
 	<section class="main">
 		<div class="container">
 			<div id="cta">
-				<a href="http://tympanus.net/codrops/?p=23525" class="btn btn-primary rounded">Download For Free Now</a>
-				<p>Unlimited 30-Days Trial Period</p>
+				<a href="#getStarted" class="btn btn-primary rounded">Get started</a>
+				<!-- <p>Unlimited 30-Days Trial Period</p> -->
 			</div>
 			<div class="row">
 				<div class="text-box col-md-offset-1 col-md-10">
@@ -142,13 +181,13 @@
 					<div class="slide-holder">
 						<h2 class="hidden-xs hidden-sm text-primary">&lt;Here is what you get&gt;</h2>
 						<div class="img-slide scroll-trigger">
-							<iframe
+							<!-- <iframe
 								src="https://codesandbox.io/embed/exercice-input-9mgbj?fontsize=14&hidenavigation=1&theme=dark"
 								style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;"
 								title="exercice-input"
 								allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
 								sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
-   							></iframe>
+   							></iframe> -->
 						</div>
 					</div>
 				</div>
@@ -417,6 +456,7 @@
 </div>
 <script src="js/jquery-1.11.2.min.js"></script>
 <script src="js/bootstrap.js"></script>
+<script src="js/prism.js"></script>
 <script src="js/jquery.main.js"></script>
 </body>
 </html>

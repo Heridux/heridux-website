@@ -13,6 +13,10 @@ body {
 p {
   font-family: "Source Sans Pro", sans-serif; }
 
+pre[class*="language-"] {
+  font-size: 62.5%;
+}
+
 .btn, a {
   -webkit-transition: color linear .4s, background-color linear .4s, border-color linear .4s;
   transition: color linear .4s, background-color linear .4s, border-color linear .4s; }
@@ -79,10 +83,11 @@ p {
   left: 0;
   width: 100%;
   z-index: 99;
-  padding: 31px 0 32px;
   background: #fff;
   box-shadow: 0 1px 1px rgba(196, 194, 202, 0.23);
   -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  padding:10px 0;
   /* Prevent Chrome bug because of on-scroll effect in other section */ }
   #header .btn {
     float: right;
@@ -175,15 +180,15 @@ p {
   transform: rotate(-45deg); }
 
 .visual {
-  /* min-height: 904px; */
+  padding:80px 0;
   position: relative;
   overflow: hidden;
   text-align: center;
   color: #8d81ac;
   font-size: 0;
   letter-spacing: -4px;
-  padding: 104px 0 0;
-  background: #000; }
+  background: #000;
+}
   .visual .bg-stretch {
     position: absolute;
     bottom: 0;
@@ -217,7 +222,17 @@ p {
     color: #494654;
     text-transform: uppercase; }
   .visual .text-block {
-    padding: 90px 0; }
+    padding: 45px 0; }
+
+.flex-code {
+  display:flex;
+  justify-content:space-around;
+  flex-wrap:wrap;
+}
+
+.flex-code > * {
+  margin:10px;
+}
 
 #cta {
   position: relative;
@@ -762,11 +777,11 @@ p {
 
   #header {
     position: relative;
-    padding: 0; }
-    #header > .container {
-      padding: 29px 0 0; }
+  }
+   /*  #header > .container {
+      padding: 10px 0 0; }
     #header .logo {
-      margin: 3px 0 32px 25px; }
+      margin: 3px 0 32px 25px; } */
     #header .btn {
       float: none;
       height: 48px;
@@ -866,10 +881,10 @@ p {
     padding: 0; }
 
   .visual {
-    padding: 0;
-    /* min-height: 760px; */ }
+    /* padding: 0 0 80px 0; */
+  }
     .visual .text-block {
-      padding: 70px 0; }
+      padding: 35px 0; }
     .visual:before {
       display: none; }
     .visual .bg-stretch {
@@ -1041,8 +1056,8 @@ p {
   body {
     min-width: 320px; }
 
-  #header > .container {
-    padding: 10px 0 0; }
+  /* #header > .container {
+    padding: 10px 0 0; } */
 
   .subscribe .form-inline {
     min-width: 280px; }
@@ -1062,8 +1077,10 @@ p {
     margin: 4px 10px;
     padding: 0 0 0 10px; }
 
-  .visual {
-    /* min-height: 340px; */ }
+  /* .visual {
+
+  } */
+
     .visual > .container {
       font-size: 1.6rem;
       line-height: 1.5; }
@@ -1079,7 +1096,7 @@ p {
     line-height: 1.148; }
 
   .visual .text-block {
-    padding: 30px 0; }
+    padding: 15px 0; }
 
   #nav .nav-drop > ul li.active:before {
     top: 15px;
