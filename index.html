@@ -126,9 +126,91 @@ const MyComponent = () => {
 			</div>
 			<div class="row">
 				<div class="text-box col-md-offset-1 col-md-10">
-					<h2>Revolutionary editor</h2>
-					<p>Aenean cursus imperdiet nisl id fermentum. Aliquam pharetra dui laoreet vulputate dignissim. Sed id metus id quam auctor molestie eget ut augue. </p>
-					<div class="social-placeholder"><img src="images/img-social-placeholder-01.png" height="26" width="365" alt=""></div>
+					<h2>Reuse your store logic</h2>
+					<p>Heridux was created primarily to make
+            <a href="https://redux.js.org/">redux</a>
+            stores reusable (just like <a href="https://reactjs.org/docs/hooks-intro.html">hooks</a> make internal states reusable).</p>
+          <p>For example, in a large application, you can have several CRUDs that work according to the same logic, but with redux it is difficult to share this code
+            (even if it's a bit easier with <a href="https://redux-toolkit.js.org/api/createSlice">Redux Toolkit</a>).</p>
+          <div class="flex-code">
+            <div>
+              <h4>MyStore.js</h4>
+              <pre><code class="language-javascript">import Heridux from "@heridux/core"
+
+export default class MyStore extends Heridux {
+  constructor(STATE_PROPERTY) {
+    super(STATE_PROPERTY)
+    this.setInitialState({ count : 0 })
+    this.createAction("increment", state => (
+      state.set("count", state.get("count") + 1)
+    ))
+  }
+}</code></pre>
+            </div>
+            <div>
+              <div>
+                <h4>store1.js</h4>
+                  <pre><code class="language-javascript">import Store from "./MyStore"
+const store = new MyStore("my first store")
+
+// register in redux store
+// with "my first store" as entry key
+store.register()
+
+export default store</code></pre>
+              </div>
+              <div>
+                <h4>store2.js</h4>
+                  <pre><code class="language-javascript">import Store from "./MyStore"
+const store = new MyStore("my second store")
+
+// create specific actions if you need
+store.createAction("multiply", (state, multiplier) => (
+  state.set("count", state.get("count")  * multiplier)
+))
+
+store.register()
+
+export default store</code></pre>
+              </div>
+            </div>
+          </div>
+          <h2>No more hesitation between state and redux</h2>
+          <p>It is sometimes difficult to know in advance whether the state should be stored in the redux store or whether an internal state is sufficient.</p>
+          <p>With heridux, no more worries : the API is unique, you can choose afterwards whether you want to use redux or an internal state.</p>
+					<div class="flex-code">
+            <div>
+              <h4>With Redux</h4>
+              <pre><code class="language-javascript">import Heridux from "@heridux/core"
+
+const store = new Heridux("entryKey")
+
+store.createAction("increment", state => (
+  state.set("count", state.get("count") + 1)
+))
+
+store.register()
+
+export default store</code></pre>
+            </div>
+            <div>
+              <h4>With internal state</h4>
+              <pre><code class="language-javascript">import Heridux from "@heridux/core"
+
+const store = new Heridux() // entry key is not needed
+
+store.createAction("increment", state => (
+  state.set("count", state.get("count") + 1)
+))
+
+// don't register in redux store and that's all !
+
+export default store</code></pre>
+            </div>
+          <div>
+          <h2>Optimized conversions of immutables</h2>
+          <p>Heridux uses <a href="https://immutable-js.github.io/immutable-js/">Immutable.js</a> to
+          store data internally and converts to plain js when you need it.</p>
 				</div>
 			</div>
 		</div>
