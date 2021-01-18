@@ -78,7 +78,7 @@
 				<!-- <span class="info">Few lines of code to make </span> -->
 			</div>
 			<div class="row">
-        <div class="col col-md-6">
+        <div class="col col-lg-5">
           <h4>Create your store</h4>
 			<pre><code class="language-javascript">import Heridux from "@heridux/core"
 
@@ -96,7 +96,7 @@ store.createAction("decrement", state => (
 
 store.register()</code></pre>
         </div>
-        <div class="col col-md-6">
+        <div class="col col-lg-7">
           <h4>Use it with React</h4>
 				  <pre><code class="language-jsx">import { useStore, useSelector } from "@heridux/react"
 
@@ -133,7 +133,7 @@ const MyComponent = () => {
           <p>For example, in a large application, you can have several CRUDs that work according to the same logic, but with redux it is difficult to share this code
             (even if it's a bit easier with <a href="https://redux-toolkit.js.org/api/createSlice">Redux Toolkit</a>).</p>
           <div class="row">
-            <div class="col col-md-6">
+            <div class="col col-lg-6">
               <h4>MyStore.js</h4>
               <pre><code class="language-javascript">import Heridux from "@heridux/core"
 
@@ -152,7 +152,7 @@ export default class MyStore extends Heridux {
   }
 }</code></pre>
             </div>
-            <div class="col col-md-6">
+            <div class="col col-lg-6">
               <div>
                 <h4>store1.js</h4>
                   <pre><code class="language-javascript">import Store from "./MyStore"
@@ -162,21 +162,22 @@ const store = new MyStore("my first store")
 // with "my first store" as entry key
 store.register()
 
-export default store</code></pre>
+store.execAction("increment")</code></pre>
               </div>
               <div>
                 <h4>store2.js</h4>
                   <pre><code class="language-javascript">import Store from "./MyStore"
 const store = new MyStore("my second store")
 
-// create specific actions if you need
-store.createAction("multiply", (state, { multiplier }) => (
-  state.set("count", state.get("count")  * multiplier)
+// create additional actions if you need
+store.createAction("decrement", state => (
+  state.set("count", state.get("count") - 1)
 ))
 
 store.register()
 
-export default store</code></pre>
+store.execAction("increment")
+store.execAction("decrement")</code></pre>
               </div>
             </div>
           </div>
