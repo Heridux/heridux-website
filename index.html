@@ -233,6 +233,13 @@ store.register()
 
 // Heridux will give you js plain object
 const plainObject = store.get("address")</code></pre>
+
+          <h2>No learning pain</h2>
+          <p>The
+            <a href="https://github.com/Heridux/Heridux/tree/main/packages/heridux">API</a>
+            is minimalist and mostly the same as
+            <a href="https://react-redux.js.org/api/connect">React-Redux</a>.
+          </p>
 				</div>
 			</div>
 		</div>
@@ -341,9 +348,75 @@ export default store
             </code></pre>
             <h4>Without redux</h4>
             <p>If you don't plan to use redux (maybe you should) but only internal states, nothing is required here.</p>
+
+            <section>
+              <h3>Using Heridux</h3>
+              <h4>store.js</h4>
+              <pre><code class="language-javascript">import Heridux from "@heridux/core"
+
+const store = new Store("counter")
+
+store.setInitialState({ counter : 0 })
+
+store.createAction("increment", state => (
+  state.set("counter", state.get("counter") + 1)
+))
+
+store.createAction("decrement", state => (
+  state.set("counter", state.get("counter") - 1)
+))
+
+store.register() // omit this line if you don't want to store your data in redux
+// but only in an internal state
+
+export default store</code></pre>
+
+              <h4>AppPart.js</h4>
+              <pre><code class="language-jsx">import { Provider } from "@heridux/react"
+import store from "./store"
+import MyComponent from "./MyComponent"
+
+export default () => (
+  &lt;Provider store={ store }&gt;
+    &lt;MyComponent/&gt;
+  &lt;/Provider&gt;
+)</code></pre>
+              <h4>MyComponent.js</h4>
+              <pre><code class="language-jsx">import { useStore, useSelector } from "@heridux/react"
+
+const MyComponent = () => {
+  const store = useStore()
+  const counter = useSelector(state => state.get("counter"))
+
+  return (
+    &lt;div&gt;
+      &lt;p&gt;Clicked: &lt;span&gt;{ counter }&lt;/span&gt; times&lt;/p&gt;
+      &lt;button onClick={ () => store.execAction("increment") }&gt;+&lt;/button&gt;
+      &lt;button onClick={ () => store.execAction("decrement") }&gt;-&lt;/button&gt;
+    &lt;/div&gt;
+  )
+}</code></pre>
+<h4>Alternatively, you can use a HOC</h4>
+<pre><code class="language-jsx">import { connect } from "@heridux/react"
+
+const MyComponent = ({ store, counter }) => (
+  &lt;div&gt;
+    &lt;p&gt;Clicked: &lt;span&gt;{ counter }&lt;/span&gt; times&lt;/p&gt;
+    &lt;button onClick={ () => store.execAction("increment") }&gt;+&lt;/button&gt;
+    &lt;button onClick={ () => store.execAction("decrement") }&gt;-&lt;/button&gt;
+  &lt;/div&gt;
+)
+
+const mapStateToProps = state => ({
+  counter : state.get("counter")
+})
+
+export default connect(mapStateToProps)(MyComponent)</code></pre>
+          </section>
       </section>
     </div>
-	</section>
+    <br/><br/>
+  </section>
 	<!-- <section class="main">
 		<div class="container">
 			<div class="block-holder">
@@ -602,7 +675,20 @@ export default store
 				</div>
 			</div>
 		</div>
-	</footer> -->
+  </footer> -->
+  <footer id="footer">
+		<div class="container">
+			<div class="footer-holder">
+				<p>This site uses
+          <a href="https://tympanus.net/codrops/2015/03/12/freebie-forkio-one-page-website-template/">Forkio template</a>
+          made by the folks from
+          <a href="https://pixelbuddha.net/">Pixelbuddha</a>
+          and
+          <a href="https://www.psd2html.com/">PSD2HTML</a>.
+        </p>
+			</div>
+		</div>
+	</footer>
 </div>
 <script src="js/jquery-1.11.2.min.js"></script>
 <script src="js/bootstrap.js"></script>
