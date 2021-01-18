@@ -51,19 +51,19 @@
 					<div class="nav-drop">
 						<ul>
 							<li class="active visible-sm visible-xs"><a href="#">Home</a></li>
-							<li><a href="#">Overview</a></li>
-							<li><a href="#">Get Started</a></li>
-							<li><a href="#">API</a></li>
-							<li><a href="#">FAQ</a></li>
+							<li><a href="#overview">Overview</a></li>
+							<li><a href="#getting-started">Getting Started</a></li>
+							<li><a href="https://github.com/Heridux/Heridux/tree/main/packages/heridux">API</a></li>
+							<!-- <li><a href="#">FAQ</a></li> -->
 						</ul>
-						<div class="drop-holder visible-sm visible-xs">
+						<!-- <div class="drop-holder visible-sm visible-xs">
 							<span>Follow Us</span>
 							<ul class="social-networks">
 								<li><a class="fa fa-github" href="#"></a></li>
 								<li><a class="fa fa-twitter" href="#"></a></li>
 								<li><a class="fa fa-facebook" href="#"></a></li>
 							</ul>
-						</div>
+						</div> -->
 					</div>
 				</nav>
 			</div>
@@ -77,8 +77,8 @@
 				<p class="tagline">The easiest way to use and reuse redux stores or react internal states</p>
 				<!-- <span class="info">Few lines of code to make </span> -->
 			</div>
-			<div class="flex-code">
-        <div>
+			<div class="row">
+        <div class="col col-md-6">
           <h4>Create your store</h4>
 			<pre><code class="language-javascript">import Heridux from "@heridux/core"
 
@@ -96,7 +96,7 @@ store.createAction("decrement", state => (
 
 store.register()</code></pre>
         </div>
-        <div>
+        <div class="col col-md-6">
           <h4>Use it with React</h4>
 				  <pre><code class="language-jsx">import { useStore, useSelector } from "@heridux/react"
 
@@ -118,10 +118,10 @@ const MyComponent = () => {
 		</div>
 		<!-- <img src="images/img-decor-01.jpg" alt="" class="bg-stretch"> -->
 	</section>
-	<section class="main">
+	<section class="main" id="overview">
 		<div class="container">
 			<div id="cta">
-				<a href="#getStarted" class="btn btn-primary rounded">Get started</a>
+				<a href="#getting-started" class="btn btn-primary rounded">Getting started</a>
 				<!-- <p>Unlimited 30-Days Trial Period</p> -->
 			</div>
 			<div class="row">
@@ -132,22 +132,27 @@ const MyComponent = () => {
             stores reusable (just like <a href="https://reactjs.org/docs/hooks-intro.html">hooks</a> make internal states reusable).</p>
           <p>For example, in a large application, you can have several CRUDs that work according to the same logic, but with redux it is difficult to share this code
             (even if it's a bit easier with <a href="https://redux-toolkit.js.org/api/createSlice">Redux Toolkit</a>).</p>
-          <div class="flex-code">
-            <div>
+          <div class="row">
+            <div class="col col-md-6">
               <h4>MyStore.js</h4>
               <pre><code class="language-javascript">import Heridux from "@heridux/core"
 
 export default class MyStore extends Heridux {
+
   constructor(STATE_PROPERTY) {
+
     super(STATE_PROPERTY)
+
     this.setInitialState({ count : 0 })
+
     this.createAction("increment", state => (
-      state.set("count", state.get("count") + 1)
+     state.set("count", state.get("count")+1)
     ))
+
   }
 }</code></pre>
             </div>
-            <div>
+            <div class="col col-md-6">
               <div>
                 <h4>store1.js</h4>
                   <pre><code class="language-javascript">import Store from "./MyStore"
@@ -165,7 +170,7 @@ export default store</code></pre>
 const store = new MyStore("my second store")
 
 // create specific actions if you need
-store.createAction("multiply", (state, multiplier) => (
+store.createAction("multiply", (state, { multiplier }) => (
   state.set("count", state.get("count")  * multiplier)
 ))
 
@@ -211,13 +216,29 @@ export default store</code></pre>
           <h2>Optimized conversions of immutables</h2>
           <p>Heridux uses <a href="https://immutable-js.github.io/immutable-js/">Immutable.js</a> to
           store data internally and converts to plain js when you need it.</p>
+          <pre><code class="language-javascript">import Heridux from "@heridux/core"
+
+const store = new Heridux("entryKey")
+
+// initialState will be convert into immutable
+store.setInitalState({
+  address : {
+    zipCode : "31400",
+    city : "Toulouse"
+  }
+})
+
+store.register()
+
+// Heridux will give you js plain object
+const plainObject = store.get("address")</code></pre>
 				</div>
 			</div>
 		</div>
 	</section>
-	<section class="area">
+	<section class="area" id="getting-started">
 		<div class="container">
-			<div class="row">
+			<!-- <div class="row">
 				<div class="col-md-5">
 					<h2 class="visible-xs visible-sm text-primary">&lt;Here is what you get&gt;</h2>
 					<ul class="visual-list">
@@ -263,20 +284,66 @@ export default store</code></pre>
 					<div class="slide-holder">
 						<h2 class="hidden-xs hidden-sm text-primary">&lt;Here is what you get&gt;</h2>
 						<div class="img-slide scroll-trigger">
-							<!-- <iframe
+							<iframe
 								src="https://codesandbox.io/embed/exercice-input-9mgbj?fontsize=14&hidenavigation=1&theme=dark"
 								style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;"
 								title="exercice-input"
 								allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
 								sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
-   							></iframe> -->
+   							></iframe>
 						</div>
 					</div>
 				</div>
-			</div>
-		</div>
+			</div> -->
+      <h2>Getting started</h2>
+      <section>
+        <h3>Installation</h3>
+        <pre><code class="language-shell"># npm
+npm install @heridux/core
+
+# yarn
+yarn add @heridux/core</code></pre>
+        <p>Most likely, you'll also need the
+          <a href="https://github.com/Heridux/Heridux/tree/main/packages/react-heridux">React bindings</a>.</p>
+        <pre><code class="language-shell"># npm
+npm install @heridux/react
+
+# yarn
+yarn add @heridux/react</code></pre>
+      </section>
+      <section>
+        <h3>Setting up</h3>
+        <h4>With redux from scratch</h4>
+        <pre><code class="language-jsx">import Heridux from "@heridux/core"
+import { Provider } from "react-redux"
+import App from "./App"
+
+// with Heridux you'll define your reducers later
+const reduxStore = Heridux.createReduxStore()
+
+export default () => (
+  &lt;Provider store={ reduxStore }&gt;
+    &lt;App/&gt;
+  &lt;/Provider&gt;
+)</code></pre>
+        <h4>With an existing redux store</h4>
+        <pre><code class="language-jsx">import { createStore } from "redux"
+import Heridux from "@heridux/core"
+
+const reducer = function(state){ /* redux reducer */ return state }
+const store = createStore(reducer)
+
+Heridux.reduxStore = store
+Heridux.reduxReducers = reducers
+
+export default store
+            </code></pre>
+            <h4>Without redux</h4>
+            <p>If you don't plan to use redux (maybe you should) but only internal states, nothing is required here.</p>
+      </section>
+    </div>
 	</section>
-	<section class="main">
+	<!-- <section class="main">
 		<div class="container">
 			<div class="block-holder">
 				<div class="block-frame">
@@ -534,7 +601,7 @@ export default store</code></pre>
 				</div>
 			</div>
 		</div>
-	</footer>
+	</footer> -->
 </div>
 <script src="js/jquery-1.11.2.min.js"></script>
 <script src="js/bootstrap.js"></script>
