@@ -179,7 +179,15 @@ store.register()
 store.execAction("increment")
 store.execAction("decrement")</code></pre>
               </div>
-            </div>
+              <div class="align-right">
+                <div class="btn-holder">
+                  <a href="https://codesandbox.io/s/heridux-reusable-store-3805d" class="btn btn-link">
+                    Live example
+                  </a>
+                </div>
+              </div>
+			</div>
+
           </div>
           <h2>No more hesitation between state and redux</h2>
           <p>It is sometimes difficult to know in advance whether the state should be stored in the redux store or whether an internal state is sufficient.</p>
@@ -338,8 +346,8 @@ export default () => (
         <pre><code class="language-jsx">import { createStore } from "redux"
 import Heridux from "@heridux/core"
 
-const reducer = function(state){ /* redux reducer */ return state }
-const store = createStore(reducer)
+const reducers = function(state){ /* redux reducer */ return state }
+const store = createStore(reducers)
 
 Heridux.reduxStore = store
 Heridux.reduxReducers = reducers

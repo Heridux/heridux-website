@@ -307,6 +307,10 @@ pre[class*="language-"] code {
 .rounded {
   border-radius: 40px; }
 
+.align-right {
+  text-align:right;
+}
+
 .main {
   padding: 47px 0; }
   .main .content {
