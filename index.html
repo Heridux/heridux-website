@@ -80,19 +80,19 @@
 			<div class="row">
         <div class="col col-lg-5">
           <h4>Create your store</h4>
-			<pre><code class="language-javascript">import Heridux from "@heridux/core"
+			<pre><code class="language-javascript">import Heridux from "@heridux/immer"
 
 const store = new Heridux("counterStore")
 
 store.setInitialState({ counter : 0 })
 
-store.createAction("increment", state => (
-  state.set("counter", state.get("counter") + 1)
-))
+store.createAction("increment", state => {
+  state.counter++
+})
 
-store.createAction("decrement", state => (
-  state.set("counter", state.get("counter") - 1)
-))
+store.createAction("decrement", state => {
+  state.counter--
+})
 
 store.register()</code></pre>
         </div>
@@ -102,7 +102,7 @@ store.register()</code></pre>
 
 const MyComponent = () => {
   const store = useStore()
-  const counter = useSelector(state => state.get("counter"))
+  const counter = useSelector(state => state.counter)
 
   return (
     &lt;div&gt;
@@ -135,7 +135,7 @@ const MyComponent = () => {
           <div class="row">
             <div class="col col-lg-6">
               <h4>MyStore.js</h4>
-              <pre><code class="language-javascript">import Heridux from "@heridux/core"
+              <pre><code class="language-javascript">import Heridux from "@heridux/immer"
 
 export default class MyStore extends Heridux {
 
@@ -145,9 +145,9 @@ export default class MyStore extends Heridux {
 
     this.setInitialState({ count : 0 })
 
-    this.createAction("increment", state => (
-     state.set("count", state.get("count")+1)
-    ))
+    this.createAction("increment", state => {
+      state.count++
+    })
 
   }
 }</code></pre>
@@ -170,9 +170,9 @@ store.execAction("increment")</code></pre>
 const store = new MyStore("my second store")
 
 // create additional actions if you need
-store.createAction("decrement", state => (
-  state.set("count", state.get("count") - 1)
-))
+store.createAction("decrement", state => {
+  state.count--
+})
 
 store.register()
 
@@ -195,13 +195,11 @@ store.execAction("decrement")</code></pre>
 					<div class="flex-code">
             <div>
               <h4>With Redux</h4>
-              <pre><code class="language-javascript">import Heridux from "@heridux/core"
+              <pre><code class="language-javascript">import Heridux from "@heridux/immer"
 
 const store = new Heridux("entryKey")
 
-store.createAction("increment", state => (
-  state.set("count", state.get("count") + 1)
-))
+store.createAction("increment", state => { state.count++ })
 
 store.register()
 
@@ -209,38 +207,68 @@ export default store</code></pre>
             </div>
             <div>
               <h4>With internal state</h4>
-              <pre><code class="language-javascript">import Heridux from "@heridux/core"
+              <pre><code class="language-javascript">import Heridux from "@heridux/immer"
 
 const store = new Heridux() // entry key is not needed
 
-store.createAction("increment", state => (
-  state.set("count", state.get("count") + 1)
-))
+store.createAction("increment", state => { state.count++ })
 
 // don't register in redux store and that's all !
 
 export default store</code></pre>
             </div>
-          <div>
-          <h2>Optimized conversions of immutables</h2>
-          <p>Heridux uses <a href="https://immutable-js.github.io/immutable-js/">Immutable.js</a> to
-          store data internally and converts to plain js when you need it.</p>
-          <pre><code class="language-javascript">import Heridux from "@heridux/core"
+            <div>
+              <h2>Easy to use with
+                <a href="https://immerjs.github.io/immer/">Immer</a>
+                or
+                <a href="https://immutable-js.github.io/immutable-js/">Immutable</a>
+              </h2>
+              <p>Even if you don't have to, it is strongly recommended to use the
+                <a href="https://github.com/Heridux/Heridux/tree/main/packages/heridux-immer">
+                  Immer version of Heridux</a>. Alternatively, you can also use the
+                <a href="https://github.com/Heridux/Heridux/tree/main/packages/heridux-immutable">
+                  Immutable version of Heridux</a>.
+              </p>
+              <h4>Without ImmerJS or ImmutableJS</h4>
+              <pre><code class="language-javascript">import Heridux from "@heridux/core"
 
 const store = new Heridux("entryKey")
 
-// initialState will be convert into immutable
 store.setInitalState({
-  address : {
-    zipCode : "31400",
-    city : "Toulouse"
-  }
+  address : { zipCode : "31400", city : "Toulouse" }
 })
 
-store.register()
+store.createAction("changeZipCode", (state, { zipCode }) => ({
+  ...state,
+  address : {
+    ...state.address,
+    zipCode
+  }
+}))</code></pre>
+              <h4>With ImmerJS</h4>
+              <pre><code class="language-javascript">import Heridux from "@heridux/immer"
 
-// Heridux will give you js plain object
-const plainObject = store.get("address")</code></pre>
+const store = new Heridux("entryKey")
+
+store.setInitalState({
+  address : { zipCode : "31400", city : "Toulouse" }
+})
+
+store.createAction("changeZipCode", (state, { zipCode }) => {
+  state.address.zipCode = zipCode
+})</code></pre>
+              <h4>With ImmutableJS</h4>
+              <pre><code class="language-javascript">import Heridux from "@heridux/immutable"
+
+const store = new Heridux("entryKey")
+
+store.setInitalState({
+  address : { zipCode : "31400", city : "Toulouse" }
+})
+
+store.createAction("changeZipCode", (state, { zipCode }) => (
+  state.setIn(["address", "city"], zipCode)
+))</code></pre>
 
           <h2>No learning pain</h2>
           <p>The
@@ -314,23 +342,14 @@ const plainObject = store.get("address")</code></pre>
       <h2>Getting started</h2>
       <section>
         <h3>Installation</h3>
-        <pre><code class="language-shell"># npm
-npm install @heridux/core
-
-# yarn
-yarn add @heridux/core</code></pre>
-        <p>Most likely, you'll also need the
-          <a href="https://github.com/Heridux/Heridux/tree/main/packages/react-heridux">React bindings</a>.</p>
-        <pre><code class="language-shell"># npm
-npm install @heridux/react
-
-# yarn
-yarn add @heridux/react</code></pre>
+        <pre><code class="language-shell">npm install @heridux/core @heridux/immer @heridux/react
+# or with yarn
+yarn add @heridux/core @heridux/immer @heridux/react</code></pre>
       </section>
       <section>
         <h3>Setting up</h3>
         <h4>With redux from scratch</h4>
-        <pre><code class="language-jsx">import Heridux from "@heridux/core"
+        <pre><code class="language-jsx">import Heridux from "@heridux/immer"
 import { Provider } from "react-redux"
 import App from "./App"
 
@@ -344,7 +363,7 @@ export default () => (
 )</code></pre>
         <h4>With an existing redux store</h4>
         <pre><code class="language-jsx">import { createStore } from "redux"
-import Heridux from "@heridux/core"
+import Heridux from "@heridux/immer"
 
 const reducers = function(state){ /* redux reducer */ return state }
 const store = createStore(reducers)
@@ -360,19 +379,19 @@ export default store
             <section>
               <h3>Using Heridux</h3>
               <h4>store.js</h4>
-              <pre><code class="language-javascript">import Heridux from "@heridux/core"
+              <pre><code class="language-javascript">import Heridux from "@heridux/immer"
 
 const store = new Store("counter")
 
 store.setInitialState({ counter : 0 })
 
-store.createAction("increment", state => (
-  state.set("counter", state.get("counter") + 1)
-))
+store.createAction("increment", state => {
+  state.counter++
+})
 
-store.createAction("decrement", state => (
-  state.set("counter", state.get("counter") - 1)
-))
+store.createAction("decrement", state => {
+  state.counter--
+})
 
 store.register() // omit this line if you don't want to store your data in redux
 // but only in an internal state
@@ -394,7 +413,7 @@ export default () => (
 
 const MyComponent = () => {
   const store = useStore()
-  const counter = useSelector(state => state.get("counter"))
+  const counter = useSelector(state => state.counter)
 
   return (
     &lt;div&gt;
@@ -416,7 +435,7 @@ const MyComponent = ({ store, counter }) => (
 )
 
 const mapStateToProps = state => ({
-  counter : state.get("counter")
+  counter : state.counter
 })
 
 export default connect(mapStateToProps)(MyComponent)</code></pre>
