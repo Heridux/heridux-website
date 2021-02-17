@@ -377,8 +377,7 @@ import Heridux from "@heridux/immer"
 const reducers = function(state){ /* redux reducer */ return state }
 const store = createStore(reducers)
 
-Heridux.reduxStore = store
-Heridux.reduxReducers = reducers
+Heridux.connect(store, reducers)
 
 export default store
             </code></pre>
