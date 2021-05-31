@@ -54,6 +54,7 @@
 							<li><a href="#overview">Overview</a></li>
 							<li><a href="#getting-started">Getting Started</a></li>
 							<li><a href="https://github.com/Heridux/Heridux/tree/main/packages/heridux">API</a></li>
+              <li><a href="#faq">FAQ</a></li>
 						</ul>
 					</div>
 				</nav>
@@ -391,6 +392,19 @@ export default connect(mapStateToProps)(MyComponent)</code></pre>
     </div>
     <br/>
 
+  </section>
+
+  <section class="area" id="faq">
+		<div class="container">
+      <h2>FAQ</h2>
+      <section>
+        <h3>Why do I get the error <i>"Redux store has not been defined as reduxStore key of Heridux"</i> ?</h3>
+        <p>Make sure Heridux is connected to Redux <b>before</b> importing any file that uses it.
+          You'll probably have to create a separate file, like in this
+          <a href="https://codesandbox.io/s/heridux-example-2gjbb">example</a>.
+        </p>
+      </section>
+    </div>
   </section>
 
   <footer id="footer">
